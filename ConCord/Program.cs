@@ -8,7 +8,7 @@ DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
-var dbString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING");
+var dbString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING")?.Trim('"', '\'');
 
 builder.Services.AddDbContext<DatabaseContext>(
     opt => {
@@ -37,6 +37,12 @@ builder.WebHost.UseUrls($"http://0.0.0.0:{port}"); //
 
 var app = builder.Build();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    db.Database.Migrate();
+}
 
 app.MapControllers();
 
