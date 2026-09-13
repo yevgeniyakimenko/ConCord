@@ -517,16 +517,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/signalr@npm:^7.0.14":
-  version: 7.0.14
-  resolution: "@microsoft/signalr@npm:7.0.14"
+"@microsoft/signalr@npm:^10.0.11":
+  version: 10.0.11
+  resolution: "@microsoft/signalr@npm:10.0.11"
   dependencies:
     abort-controller: "npm:^3.0.0"
     eventsource: "npm:^2.0.2"
     fetch-cookie: "npm:^2.0.3"
     node-fetch: "npm:^2.6.7"
-    ws: "npm:^7.4.5"
-  checksum: 10c0/c58d2eb63765ba2100759f69ab8df293d4886c2e6acfd5c9b4cc92f6ff749a355d6147186bc1cde65fbda8641af3f8d88a40474e1c5bb56c100ff66bbc8a6785
+    ws: "npm:^7.5.10"
+  checksum: 10c0/9b0c54b61d850dc5e4bbd2526b7f07434088ef89629d19d78e43f95c1aa6e379d377a0765078261091bbcdb23f54b7c700958f20c5496133ed79f84402f7721a
   languageName: node
   linkType: hard
 
@@ -763,7 +763,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "chat-app@workspace:."
   dependencies:
-    "@microsoft/signalr": "npm:^7.0.14"
+    "@microsoft/signalr": "npm:^10.0.11"
     "@types/react": "npm:^18.3.31"
     "@types/react-dom": "npm:^18.3.7"
     "@vitejs/plugin-react": "npm:^3.1.0"
@@ -2086,9 +2086,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^7.4.5":
-  version: 7.5.9
-  resolution: "ws@npm:7.5.9"
+"ws@npm:^7.5.10":
+  version: 7.5.13
+  resolution: "ws@npm:7.5.13"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ^5.0.2
@@ -2097,7 +2097,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 10c0/aec4ef4eb65821a7dde7b44790f8699cfafb7978c9b080f6d7a98a7f8fc0ce674c027073a78574c94786ba7112cc90fa2cc94fc224ceba4d4b1030cff9662494
+  checksum: 10c0/e223726bbda5768ed58ec9252d04eda7018ef380ea122bb94e595a4d7a02b5baeb423933936576fddb8fa51b642375f7ae814bf0f6f5d9a3ce290566578a8c5a
   languageName: node
   linkType: hard
 
