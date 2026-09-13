@@ -11,10 +11,7 @@ export default defineConfig({
         target: 'http://127.0.0.1:8081',
         ws: true,
       },
-    }
+    },
   },
-  plugins: [
-    react(),
-    tailwindcss(),
-  ],
+  plugins: [react(), tailwindcss()],
 })

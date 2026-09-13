@@ -28,7 +28,7 @@ export default function useSignalR(url) {
         }
       })
       .catch((err) => {
-        console.error("SignalR connection error:", err)
+        console.error('SignalR connection error:', err)
       })
 
     // Handle the connection being closed
