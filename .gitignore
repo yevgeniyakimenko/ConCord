@@ -24,6 +24,9 @@ dist-ssr
 *.sw?
 
 .env
+# Environment variants
+.env.*
+!.env.example
 
 
 ## Ignore Visual Studio temporary files, build results, and
@@ -506,3 +509,13 @@ $RECYCLE.BIN/
 
 # yarn
 ConCordFrontEnd/.yarn/*
+
+# Compiled frontend bundle in backend
+ConCord/wwwroot/assets/
+
+# Local appsettings and DB dumps
+appsettings.*.local.json
+appsettings.Local.json
+appsettings.Production.json
+*.dump
+*.sql
