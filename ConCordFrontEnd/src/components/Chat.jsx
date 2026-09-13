@@ -15,7 +15,7 @@ export default function Chat({ username }) {
   const handleSelectChannel = (channel) => {
     setChannelSelected(channel)
   }
-  
+
   const handleSubmit = async (message) => {
     await fetch(`/api/channels/${channelSelected.id}/messages`, {
       method: 'POST',
@@ -87,12 +87,14 @@ export default function Chat({ username }) {
   }, [connection, channelSelected])
 
   useEffect(() => {
-    document.getElementById('chatDiv').scrollTo(0, document.getElementById('chatList').scrollHeight)
+    document
+      .getElementById('chatDiv')
+      .scrollTo(0, document.getElementById('chatList').scrollHeight)
   }, [messages])
 
   return (
     <div className="Chat h-full w-full flex flex-col sm:flex-row">
-      <Sidebar 
+      <Sidebar
         channels={channels}
         selectedChannel={channelSelected}
         onSelectChannel={handleSelectChannel}
@@ -100,19 +102,28 @@ export default function Chat({ username }) {
       />
 
       <div className="main h-3/4 grow sm:h-full w-full flex flex-col">
-        <div 
-          id='chatDiv' 
-          className="Messages bg-white dark:bg-black grow overflow-y-auto border rounded-md border-slate-500 shadow-md shadow-slate-400 dark:shadow-zinc-600 p-4 mb-4 sm:mt-4 sm:mx-4 "
+        <div
+          id="chatDiv"
+          className="Messages bg-white dark:bg-black grow overflow-y-auto border rounded-md border-slate-500 shadow-md shadow-slate-400 dark:shadow-none p-4 mb-4 sm:mt-4 sm:mx-4 "
         >
-          <ul id='chatList' className='text-left text-clip'>
-            {channelSelected && messages.map((message) => (
-              <Message key={message.id} message={message} username={username} />
-            ))}
+          <ul id="chatList" className="text-left text-clip">
+            {channelSelected &&
+              messages.map((message) => (
+                <Message
+                  key={message.id}
+                  message={message}
+                  username={username}
+                />
+              ))}
           </ul>
         </div>
-        
+
         {channelSelected && (
-          <Form userName={username} channelId={channelSelected.id} onSubmit={handleSubmit} />
+          <Form
+            userName={username}
+            channelId={channelSelected.id}
+            onSubmit={handleSubmit}
+          />
         )}
       </div>
     </div>
