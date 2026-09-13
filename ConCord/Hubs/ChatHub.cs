@@ -8,7 +8,7 @@ public class ChatHub : Hub
     return base.OnConnectedAsync();
   }
 
-  public override Task OnDisconnectedAsync(Exception exception)
+  public override Task OnDisconnectedAsync(Exception? exception)
   {
     return base.OnDisconnectedAsync(exception);
   }
