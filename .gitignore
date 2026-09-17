@@ -510,8 +510,8 @@ $RECYCLE.BIN/
 # yarn
 ConCordFrontEnd/.yarn/*
 
-# Compiled frontend bundle in backend
-ConCord/wwwroot/assets/
+# Compiled frontend bundle in backend (built during Docker build on Render)
+ConCord/wwwroot/
 
 # Local appsettings and DB dumps
 appsettings.*.local.json
