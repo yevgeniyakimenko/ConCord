@@ -519,3 +519,6 @@ appsettings.Local.json
 appsettings.Production.json
 *.dump
 *.sql
+
+# docs
+docs
