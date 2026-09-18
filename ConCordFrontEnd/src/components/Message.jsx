@@ -15,7 +15,7 @@ export default function Message({ message, username }) {
   return (
     <>
       <li className="mb-2">
-        <p className="flex items-start">
+        <p className="flex items-start leading-tight">
           <span className={`mr-2 block shrink-0 ${myMessage}`}>
             <span className="font-semibold">{message.userName}</span>:
           </span>
