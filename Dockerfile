@@ -23,7 +23,7 @@ WORKDIR /app/backend
 
 # Download the model directly from Hugging Face
 RUN curl -fsSL -o ./ToxicDetector.mlnet \
-    https://huggingface.co/wi12ylfdk/concord-toxic-detector/resolve/main/concord-toxic-detector.mlnet
+    https://huggingface.co/wi12ylfdk/concord-toxic-detector/resolve/main/toxic-detector-tiny.mlnet
 
 # Restore .NET dependencies
 COPY ConCord/ConCord.csproj ./
