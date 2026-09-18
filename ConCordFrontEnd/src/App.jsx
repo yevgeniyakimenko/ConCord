@@ -30,7 +30,7 @@ export default function App() {
               type="text"
               id="username"
               name="username"
-              className="focus:outline-none dark:bg-black border rounded-md border-slate-500 shadow-md shadow-slate-400 dark:shadow-none mb-4 sm:mr-4 px-4 py-2"
+              className="focus:outline-none bg-white dark:bg-black border rounded-md border-slate-500 shadow-md shadow-slate-400 dark:shadow-none mb-4 sm:mr-4 px-4 py-2"
             />
             <button
               type="submit"

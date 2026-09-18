@@ -57,7 +57,7 @@ export default function Sidebar({
             value={input}
             placeholder="New channel name"
             onChange={(e) => setInput(e.target.value)}
-            className="sm:block grow border rounded-md focus:outline-none dark:bg-black border-slate-500 shadow-md shadow-slate-400 dark:shadow-none px-4 py-2 mr-2 sm:mr-0 sm:mb-2"
+            className="sm:block grow border rounded-md focus:outline-none bg-white dark:bg-black border-slate-500 shadow-md shadow-slate-400 dark:shadow-none px-4 py-2 mr-2 sm:mr-0 sm:mb-2"
           />
           <button
             type="button"
