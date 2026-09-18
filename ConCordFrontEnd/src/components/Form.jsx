@@ -39,7 +39,7 @@ export default function Form({ userName, channelId, onSubmit }) {
             value={text}
             onChange={(e) => setText(e.target.value)}
             disabled={isSubmitting}
-            className="focus:outline-none grow dark:bg-black border rounded-md border-slate-500 shadow-md shadow-slate-400 dark:shadow-none w-5/6 mr-2 px-4 py-2 disabled:opacity-60"
+            className="focus:outline-none grow bg-white dark:bg-black border rounded-md border-slate-500 shadow-md shadow-slate-400 dark:shadow-none w-5/6 mr-2 px-4 py-2 disabled:opacity-60"
           />
           <button
             type="submit"
