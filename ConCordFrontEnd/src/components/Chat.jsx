@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import useSignalR from '../useSignalR'
 
 import Sidebar from './Sidebar'
 import Message from './Message'
 import Form from './Form'
+import ToxicWarningModal from './ToxicWarningModal'
 
 export default function Chat({ username }) {
   const connection = useSignalR('/r/chatHub')
@@ -11,19 +12,43 @@ export default function Chat({ username }) {
   const [channels, setChannels] = useState([])
   const [messages, setMessages] = useState([])
   const [channelSelected, setChannelSelected] = useState(null)
+  const [toxicWarning, setToxicWarning] = useState(null)
+
+  const handleCloseToxicWarning = useCallback(() => {
+    setToxicWarning(null)
+  }, [])
 
   const handleSelectChannel = (channel) => {
     setChannelSelected(channel)
   }
 
   const handleSubmit = async (message) => {
-    await fetch(`/api/channels/${channelSelected.id}/messages`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(message),
-    })
+    try {
+      const response = await fetch(
+        `/api/channels/${channelSelected.id}/messages`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(message),
+        },
+      )
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null)
+        if (errorData && errorData.isToxic) {
+          setToxicWarning(errorData)
+          return { success: false, isToxic: true }
+        }
+        return { success: false }
+      }
+
+      return { success: true }
+    } catch (err) {
+      console.error('Error sending message:', err)
+      return { success: false }
+    }
   }
 
   const handleSubmitChannel = async (channelName) => {
@@ -126,6 +151,12 @@ export default function Chat({ username }) {
           />
         )}
       </div>
+
+      <ToxicWarningModal
+        isOpen={!!toxicWarning}
+        onClose={handleCloseToxicWarning}
+        details={toxicWarning}
+      />
     </div>
   )
 }

@@ -1,15 +1,28 @@
+import { useState } from 'react'
+
 export default function Form({ userName, channelId, onSubmit }) {
-  function handleSubmit(e) {
+  const [text, setText] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  async function handleSubmit(e) {
     e.preventDefault()
-    const { text } = e.target.elements
-    if (!text.value) return
-    const message = {
-      text: text.value,
-      userName,
-      channelId,
+    const trimmed = text.trim()
+    if (!trimmed || isSubmitting) return
+
+    setIsSubmitting(true)
+    try {
+      const message = {
+        text: trimmed,
+        userName,
+        channelId,
+      }
+      const result = await onSubmit(message)
+      if (result?.success) {
+        setText('')
+      }
+    } finally {
+      setIsSubmitting(false)
     }
-    onSubmit(message)
-    text.value = ''
   }
 
   return (
@@ -23,13 +36,17 @@ export default function Form({ userName, channelId, onSubmit }) {
             type="text"
             id="text"
             name="text"
-            className="focus:outline-none grow dark:bg-black border rounded-md border-slate-500 shadow-md shadow-slate-400 dark:shadow-none w-5/6 mr-2 px-4 py-2"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            disabled={isSubmitting}
+            className="focus:outline-none grow dark:bg-black border rounded-md border-slate-500 shadow-md shadow-slate-400 dark:shadow-none w-5/6 mr-2 px-4 py-2 disabled:opacity-60"
           />
           <button
             type="submit"
-            className="bg-orange-400 dark:bg-orange-600 hover:bg-orange-500 border rounded-md border-slate-500 shadow-md shadow-slate-400 dark:shadow-none px-3 py-2"
+            disabled={isSubmitting || !text.trim()}
+            className="bg-orange-400 dark:bg-orange-600 hover:bg-orange-500 border rounded-md border-slate-500 shadow-md shadow-slate-400 dark:shadow-none px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
-            📢
+            {isSubmitting ? '⏳' : '📢'}
           </button>
         </div>
       </form>
