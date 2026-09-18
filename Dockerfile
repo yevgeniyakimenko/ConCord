@@ -21,6 +21,10 @@ RUN yarn build
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS backend-build
 WORKDIR /app/backend
 
+# Download the model directly from Hugging Face
+RUN curl -fsSL -o ./ToxicDetector.mlnet \
+    https://huggingface.co/wi12ylfdk/concord-toxic-detector/resolve/main/concord-toxic-detector.mlnet
+
 # Restore .NET dependencies
 COPY ConCord/ConCord.csproj ./
 RUN dotnet restore
