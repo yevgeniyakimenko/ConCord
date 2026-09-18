@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using ConCord.Models;
 using ConCord.Hubs;
+using ConCord.Services;
 
 namespace ConCord.Controllers;
 
@@ -12,11 +13,13 @@ public class ChannelsController : ControllerBase
 {
     private readonly DatabaseContext _context;
     private readonly IHubContext<ChatHub> _hub;
+    private readonly IToxicLanguageDetector _toxicDetector;
 
-    public ChannelsController(DatabaseContext context, IHubContext<ChatHub> hub)
+    public ChannelsController(DatabaseContext context, IHubContext<ChatHub> hub, IToxicLanguageDetector toxicDetector)
     {
         _context = context;
         _hub = hub;
+        _toxicDetector = toxicDetector;
     }
 
     // GET: api/Channels
@@ -92,14 +95,50 @@ public class ChannelsController : ControllerBase
 
     // POST: api/Channels/1/Messages
     [HttpPost("{channelId}/Messages")]
-    public async Task<Message> PostChannelMessage(int channelId, Message message)
+    [ProducesResponseType(typeof(Message), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Message>> PostChannelMessage(int channelId, Message? message)
     {
+        if (message == null || string.IsNullOrWhiteSpace(message.Text))
+        {
+            return BadRequest(new { message = "Message text cannot be empty." });
+        }
+
+        var trimmedText = message.Text.Trim();
+        if (trimmedText.Length > 500)
+        {
+            return BadRequest(new { message = "Message text cannot exceed 500 characters." });
+        }
+
+        if (!await _context.Channels.AnyAsync(c => c.Id == channelId))
+        {
+            return NotFound(new { message = $"Channel with ID {channelId} does not exist." });
+        }
+
+        message.Text = trimmedText;
+        if (!string.IsNullOrEmpty(message.UserName) && message.UserName.Length > 10)
+        {
+            message.UserName = message.UserName.Substring(0, 10);
+        }
+
+        var toxicity = _toxicDetector.CheckToxicity(message.Text);
+        if (toxicity.IsToxic)
+        {
+            return BadRequest(new
+            {
+                isToxic = true,
+                title = "Toxic Language Detected",
+                message = "Your message was flagged as containing toxic or inappropriate language. ConCord promotes a friendly and respectful chat community. Please rephrase your message and refrain from posting toxic language.",
+                score = toxicity.ToxicityScore
+            });
+        }
+
         message.ChannelId = channelId;
         _context.Messages.Add(message);
         await _context.SaveChangesAsync();
         await _hub.Clients.Group(channelId.ToString()).SendAsync("ReceiveMessage", message);
-        //return CreatedAtAction(nameof (GetChannel), new { id = message.Id }, message);
-        return message;
+        return Ok(message);
     }
 
     // DELETE: api/Channels/5
