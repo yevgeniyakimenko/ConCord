@@ -147,6 +147,7 @@ export default function Chat({ username }) {
           <Form
             userName={username}
             channelId={channelSelected.id}
+            channelName={channelSelected.name}
             onSubmit={handleSubmit}
           />
         )}

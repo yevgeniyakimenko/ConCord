@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function Form({ userName, channelId, onSubmit }) {
+export default function Form({ userName, channelId, channelName, onSubmit }) {
   const [text, setText] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -32,7 +32,7 @@ export default function Form({ userName, channelId, onSubmit }) {
           <input
             autoFocus
             maxLength={500}
-            placeholder={`Chatting as ${userName}`}
+            placeholder={`Chatting in ${channelName} as ${userName}`}
             type="text"
             id="text"
             name="text"
