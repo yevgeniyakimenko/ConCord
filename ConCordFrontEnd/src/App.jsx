@@ -12,7 +12,7 @@ export default function App() {
         <Chat username={username} />
       ) : (
         <div className="flex flex-col items-center justify-center w-full h-full gap-6">
-          <p>Welcome to ConCord chat</p>
+          <p className="text-3xl sm:mr-2 mb-4">Welcome to ConCord chat</p>
 
           <form
             className="flex flex-col sm:flex-row items-center justify-center sm:w-full"
@@ -23,7 +23,7 @@ export default function App() {
               setUsername(userName)
             }}
           >
-            <label htmlFor="username" className="text-xl sm:mr-2 mb-4">
+            <label htmlFor="username" className="text-lg sm:mr-2 mb-4">
               Your username:
             </label>
             <input
